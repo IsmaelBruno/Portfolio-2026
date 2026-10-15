@@ -1,15 +1,15 @@
 :root {
-  --folio-paper: #f1f3ed;
-  --folio-white: #fafbf8;
+ --folio-paper: #f6f7f4;         /* était #f1f3ed — plus clair */
+  --folio-white: #fbfcfa;
   --folio-ink: #17231d;
-  --folio-muted: #66716a;
-  --folio-line: #d4dbd2;
-  --folio-green: #2b9168;
-  --folio-lime: #c9e879;
+  --folio-muted: #6b7570;
+  --folio-line: #dfe3de;          /* était #d4dbd2 — plus doux */
+  --folio-green: #3a8a63;         /* était #2b9168 — plus équilibré */
+  --folio-lime: #d4e89a;           /* était #c9e879 — moins saturé */
   --folio-coral: #db8a68;
-  --folio-dark: #264739;
-  --folio-tint: #e5eadf;
-  --folio-tint-soft: #edf0e8;
+  --folio-dark: #1f3a30;           /* était #264739 — moins vert */
+  --folio-tint: #eef1ea;           /* était #e5eadf */
+  --folio-tint-soft: #f2f4ef;
   --folio-card: #e4eadc;
   --folio-card-border: #ccd5c9;
   --folio-hover: #f1f5ec;
@@ -2280,6 +2280,8 @@ html, body {
   max-width: 100%;
 }
 
+
+
 /* Sur mobile, forcer l'overflow hidden sur case-art */
 @media (max-width: 760px) {
   .case-art {
@@ -2330,5 +2332,206 @@ html, body {
   
   .case-content h3 {
     font-size: 22px;
+  }
+}
+
+/* ==========================================================================
+   FORCE AFFICHAGE — Projects (mobile & desktop)
+   ========================================================================== */
+
+/* Le conteneur principal */
+.case-gallery {
+  display: block !important;
+  width: 100%;
+  min-height: 200px;
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none !important;
+}
+
+/* Le toolbar */
+.case-toolbar {
+  display: flex !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* La liste des projets */
+.case-list {
+  display: block !important;
+  min-height: 100px;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Chaque carte projet */
+.case-study {
+  display: grid !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none !important;
+}
+
+/* Neutraliser les transforms de Framer Motion */
+.case-study,
+.case-gallery,
+.case-list {
+  will-change: auto !important;
+}
+
+/* ==========================================================================
+   MOBILE — Réécriture complète de la grille
+   ========================================================================== */
+
+@media (max-width: 760px) {
+  /* Toolbar simplifié */
+  .case-toolbar {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 12px !important;
+    margin: 0 0 20px 0 !important;
+  }
+
+  .case-filters {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    gap: 6px !important;
+    padding-bottom: 8px !important;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .case-filters::-webkit-scrollbar {
+    display: none;
+  }
+
+  .case-filter {
+    flex: 0 0 auto !important;
+    white-space: nowrap;
+    font-size: 10px !important;
+    padding: 0 10px !important;
+    min-height: 32px !important;
+  }
+
+  .case-count {
+    align-self: flex-end !important;
+    font-size: 8px;
+  }
+
+  /* Grid en une seule colonne */
+  .case-study {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+    padding: 22px 0 !important;
+    border-bottom: 1px solid rgba(236, 241, 233, 0.24) !important;
+  }
+
+  /* Index en ligne horizontale */
+  .case-index {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 12px !important;
+    grid-column: 1 !important;
+    grid-row: auto !important;
+    font-size: 8px !important;
+  }
+
+  .case-index span:first-child {
+    font-size: 11px !important;
+  }
+
+  /* Case-art visible */
+  .case-art {
+    display: grid !important;
+    grid-column: 1 !important;
+    grid-row: auto !important;
+    min-height: 200px !important;
+    padding: 14px !important;
+    overflow: hidden !important;
+    background: #e8ede3 !important;
+  }
+
+  .case-art svg {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    overflow: visible;
+  }
+
+  /* Contenu */
+  .case-content {
+    display: block !important;
+    grid-column: 1 !important;
+    grid-row: auto !important;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  .case-content h3 {
+    font-size: 24px !important;
+    line-height: 1.2 !important;
+    margin: 8px 0 12px !important;
+  }
+
+  .case-details {
+    display: grid !important;
+    gap: 10px !important;
+  }
+
+  .case-details > div {
+    display: grid !important;
+    grid-template-columns: 70px minmax(0, 1fr) !important;
+    gap: 8px !important;
+  }
+
+  .case-details dt {
+    font-size: 8px !important;
+  }
+
+  .case-details dd {
+    font-size: 11px !important;
+    line-height: 1.6 !important;
+  }
+
+  .case-stack {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 5px !important;
+    margin-top: 12px !important;
+  }
+
+  .case-stack li {
+    font-size: 8px !important;
+    padding: 4px 7px !important;
+  }
+}
+
+/* ==========================================================================
+   TRÈS PETITS ÉCRANS
+   ========================================================================== */
+
+@media (max-width: 420px) {
+  .case-art {
+    min-height: 150px !important;
+    padding: 10px !important;
+  }
+
+  .case-content h3 {
+    font-size: 20px !important;
+  }
+
+  .case-details > div {
+    grid-template-columns: 1fr !important;
+    gap: 4px !important;
+  }
+
+  .case-details dt {
+    font-weight: 600;
+    color: var(--folio-lime);
   }
 }
