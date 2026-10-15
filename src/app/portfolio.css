@@ -4,10 +4,10 @@
   --folio-ink: #17231d;
   --folio-muted: #66716a;
   --folio-line: #d4dbd2;
-  --folio-green: #286b50;
+  --folio-green: #2b9168;
   --folio-lime: #c9e879;
   --folio-coral: #db8a68;
-  --folio-dark: #15231d;
+  --folio-dark: #264739;
   --folio-tint: #e5eadf;
   --folio-tint-soft: #edf0e8;
   --folio-card: #e4eadc;
@@ -2260,4 +2260,75 @@ body.portfolio-body {
   font-size: 9px;
   font-weight: 500;
   border-radius: 2px;
+}
+/* ==========================================================================
+   CORRECTIONS RESPONSIVE — PROJECTS
+   ========================================================================== */
+
+/* Empêche tout débordement horizontal */
+html, body {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+.case-gallery,
+.case-list,
+.case-study,
+.case-content,
+.case-art {
+  min-width: 0;
+  max-width: 100%;
+}
+
+/* Sur mobile, forcer l'overflow hidden sur case-art */
+@media (max-width: 760px) {
+  .case-art {
+    overflow: hidden;
+  }
+  
+  .case-art svg {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  /* Sécurité : le contenu ne déborde jamais */
+  .case-content {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+  
+  .case-details dd {
+    overflow-wrap: anywhere;
+  }
+}
+
+/* Très petits écrans */
+@media (max-width: 420px) {
+  .case-study {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  
+  .case-index {
+    grid-column: 1;
+    grid-row: auto;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+  
+  .case-art {
+    grid-column: 1;
+    grid-row: auto;
+    min-height: 160px;
+  }
+  
+  .case-content {
+    grid-column: 1;
+    grid-row: auto;
+  }
+  
+  .case-content h3 {
+    font-size: 22px;
+  }
 }

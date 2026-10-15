@@ -3,6 +3,13 @@ import localFont from "next/font/local";
 import "./globals.css";
 import "./portfolio.css";
 
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  themeColor: "#f1f3ed",
+};
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
