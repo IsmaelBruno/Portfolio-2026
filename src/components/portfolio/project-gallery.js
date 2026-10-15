@@ -3,8 +3,8 @@
 import { useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
-
-const filters = ["Tout", "Analytics & BI", "Data Engineering", "Data Science", "IA & automatisation"];
+import { useLanguage } from "@/lib/i18n";
+import { TechBadge } from "./tech-badge";
 
 function ProjectDiagram({ type }) {
   if (type === "pipeline") {
@@ -29,7 +29,7 @@ function ProjectDiagram({ type }) {
         <circle className="diagram-source" cx="76" cy="68" r="31" /><text className="diagram-label" x="76" y="72">ATG</text>
         <circle className="diagram-source" cx="76" cy="152" r="31" /><text className="diagram-label" x="76" y="156">JDE</text>
         <rect className="diagram-match" x="273" y="80" width="104" height="60" rx="2" />
-        <text className="diagram-label" x="325" y="106">RAPPROCHER</text><text className="diagram-annotation" x="325" y="124">CLÉS · ÉCARTS</text>
+        <text className="diagram-label" x="325" y="106">RECONCILE</text><text className="diagram-annotation" x="325" y="124">KEYS · GAPS</text>
       </svg>
     );
   }
@@ -42,7 +42,7 @@ function ProjectDiagram({ type }) {
           <rect className={`diagram-bar${i % 3 === 0 ? " diagram-bar--accent" : ""}`} key={x} x={x} y={170 - [45, 83, 59, 110, 75, 133, 94, 121][i]} width="17" height={[45, 83, 59, 110, 75, 133, 94, 121][i]} />
         ))}
         <path className="diagram-trend" d="M66 130 C114 115 125 119 158 98 S225 110 254 79 S320 82 374 46" />
-        <text className="diagram-annotation" x="46" y="197">VENTES / POWER QUERY → POWER BI</text>
+        <text className="diagram-annotation" x="46" y="197">SALES / POWER QUERY → POWER BI</text>
       </svg>
     );
   }
@@ -58,7 +58,7 @@ function ProjectDiagram({ type }) {
         <text className="diagram-annotation" x="280" y="69">KNN</text>
         <text className="diagram-label" x="280" y="92">DISTANCE</text>
         <path className="diagram-path diagram-path--dotted" d="M280 108 H354 V151 H280" />
-        <text className="diagram-annotation" x="280" y="173">CLASSE · GRADIO</text>
+        <text className="diagram-annotation" x="280" y="173">PREDICT · GRADIO</text>
       </svg>
     );
   }
@@ -82,38 +82,55 @@ function ProjectDiagram({ type }) {
       <path className="diagram-path diagram-path--dotted" d="M72 110 H164 M211 110 H302 M350 110 H383" />
       <circle className="diagram-source" cx="72" cy="110" r="29" /><text className="diagram-label" x="72" y="114">MAIL</text>
       <rect className="diagram-match" x="144" y="79" width="78" height="62" rx="2" />
-      <text className="diagram-label" x="183" y="106">VALIDER</text><text className="diagram-annotation" x="183" y="124">n8n</text>
-      <circle className="diagram-vector" cx="326" cy="110" r="29" /><text className="diagram-label" x="326" y="114">RÉPONSE</text>
+      <text className="diagram-label" x="183" y="106">VALIDATE</text><text className="diagram-annotation" x="183" y="124">n8n</text>
+      <circle className="diagram-vector" cx="326" cy="110" r="29" /><text className="diagram-label" x="326" y="114">REPLY</text>
       <text className="diagram-annotation" x="212" y="180" textAnchor="middle">TRIGGER → CONDITION → ACTION</text>
     </svg>
   );
 }
 
-export default function ProjectGallery({ projects }) {
-  const [activeFilter, setActiveFilter] = useState("Tout");
+export default function ProjectGallery() {
+  const { t } = useLanguage();
+  const [filterIndex, setFilterIndex] = useState(0);
   const reduceMotion = useReducedMotion();
-  const visibleProjects = activeFilter === "Tout"
-    ? projects
-    : projects.filter((project) => project.category === activeFilter);
+
+  const projectItems = t.projects.items;
+  const filterLabels = t.projects.filters;
+
+  // Filter 0 is always "All"
+  const visibleProjects = filterIndex === 0
+    ? projectItems
+    : projectItems.filter((p) => {
+        // Match standardized category keys based on filter index
+        const cat = p.category.toLowerCase();
+        if (filterIndex === 1) return cat.includes("analytics") || cat.includes("bi");
+        if (filterIndex === 2) return cat.includes("engineering") || cat.includes("fantsona");
+        if (filterIndex === 3) return cat.includes("science");
+        if (filterIndex === 4) return cat.includes("ia") || cat.includes("ai") || cat.includes("fampandehanana") || cat.includes("automatisation");
+        return true;
+      });
 
   return (
     <div className="case-gallery">
       <div className="case-toolbar">
-        <div className="case-filters" aria-label="Filtrer les études de cas">
-          {filters.map((filter) => (
+        <div className="case-filters" aria-label="Filter case studies">
+          {filterLabels.map((label, idx) => (
             <button
-              aria-pressed={activeFilter === filter}
-              className={activeFilter === filter ? "case-filter is-active" : "case-filter"}
-              key={filter}
-              onClick={() => setActiveFilter(filter)}
+              aria-pressed={filterIndex === idx}
+              className={filterIndex === idx ? "case-filter is-active" : "case-filter"}
+              key={label}
+              onClick={() => setFilterIndex(idx)}
               type="button"
             >
-              {filter}
+              {label}
             </button>
           ))}
         </div>
-        <span className="case-count">{String(visibleProjects.length).padStart(2, "0")} ÉTUDES</span>
+        <span className="case-count">
+          {String(visibleProjects.length).padStart(2, "0")} {t.projects.countSuffix}
+        </span>
       </div>
+
       <motion.div className="case-list" layout>
         <AnimatePresence mode="popLayout" initial={false}>
           {visibleProjects.map((project, index) => (
@@ -121,26 +138,59 @@ export default function ProjectGallery({ projects }) {
               className="case-study"
               key={project.id}
               layout
-              initial={false}
+              initial={reduceMotion ? false : { opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               exit={reduceMotion ? undefined : { opacity: 0, y: -10 }}
               transition={{ duration: reduceMotion ? 0 : 0.32, delay: reduceMotion ? 0 : index * 0.035 }}
             >
-              <div className="case-index"><span>{String(index + 1).padStart(2, "0")}</span><span>{project.category}</span></div>
-              <div className="case-art"><ProjectDiagram type={project.visual} /><span className="case-year">ÉTUDE / {String(index + 1).padStart(2, "0")}</span></div>
+              <div className="case-index">
+                <span>{String(index + 1).padStart(2, "0")}</span>
+                <span>{project.category}</span>
+              </div>
+              <div className="case-art">
+                <ProjectDiagram type={project.visual} />
+                <span className="case-year">CASE / {String(index + 1).padStart(2, "0")}</span>
+              </div>
               <div className="case-content">
                 <div className="case-titleline">
-                  <div><span className={`status-dot status-dot--${project.status.startsWith("Réalisé") ? "done" : project.status.startsWith("Prototype") ? "prototype" : project.status.startsWith("Statut à confirmer") ? "pending" : "active"}`} />{project.status}</div>
+                  <div>
+                    <span
+                      className={`status-dot status-dot--${
+                        project.status.toLowerCase().includes("in progress") ||
+                        project.status.toLowerCase().includes("am-panatanterahana") ||
+                        project.status.toLowerCase().includes("confirmer")
+                          ? "pending"
+                          : project.status.toLowerCase().includes("prototype") ||
+                            project.status.toLowerCase().includes("santionany")
+                          ? "prototype"
+                          : "done"
+                      }`}
+                    />
+                    {project.status}
+                  </div>
                   <ArrowUpRight aria-hidden="true" size={18} strokeWidth={1.5} />
                 </div>
                 <h3>{project.title}</h3>
                 <dl className="case-details">
-                  <div><dt>Contexte</dt><dd>{project.context}</dd></div>
-                  <div><dt>Démarche</dt><dd>{project.approach}</dd></div>
-                  <div><dt>Livrable / état</dt><dd>{project.outcome}</dd></div>
+                  <div>
+                    <dt>{t.projects.details.context}</dt>
+                    <dd>{project.context}</dd>
+                  </div>
+                  <div>
+                    <dt>{t.projects.details.approach}</dt>
+                    <dd>{project.approach}</dd>
+                  </div>
+                  <div>
+                    <dt>{t.projects.details.outcome}</dt>
+                    <dd>{project.outcome}</dd>
+                  </div>
                 </dl>
-                <ul className="case-stack" aria-label="Technologies et méthodes">
-                  {project.stack.map((tool) => <li key={tool}>{tool}</li>)}
+                <ul className="case-stack" aria-label="Technologies and methods">
+                  {project.stack.map((tool) => (
+                    <li key={tool}>
+                      <TechBadge name={tool} />
+                    </li>
+                  ))}
                 </ul>
               </div>
             </motion.article>

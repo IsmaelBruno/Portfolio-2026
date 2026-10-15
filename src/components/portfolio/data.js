@@ -170,7 +170,7 @@ export const experiences = [
     role: "Stagiaire Data & BI",
     organization: "Logistique Pétrolière SA",
     description: "Stage en Data et Business Intelligence dans le secteur de la logistique pétrolière.",
-    tools: "Écosystème Python · Apache Hop · Apache NiFi · PostgreSQL · Power Query · Power BI Desktop / Service · Power Automate · SFTP · Docker",
+    tools: "Écosystème Python · Apache Hop · Apache NiFi · Power Query · Power BI Desktop / Service · Power Automate · SFTP ",
     brandLogos: ["Python", "Apache NiFi", "PostgreSQL", "Docker"],
   },
   {
@@ -178,8 +178,8 @@ export const experiences = [
     role: "Stagiaire Data Analyst",
     organization: "MGBI · Madagascar Business Intelligence",
     description: "Extraction depuis les ERP Odoo et EBP, transformation puis chargement dans des tableaux et rapports.",
-    tools: "Excel avancé · Power Query · PostgreSQL · SSMS",
-    brandLogos: ["Excel", "PowerQuery", "PostgreSQL", "SSMS"],
+    tools: "Excel avancé · Power Query · SSMS",
+    brandLogos: [ "PowerQuery", "PostgreSQL", "SSMS"],
   },
   {
     date: "Oct. — Nov. 2025",
@@ -194,7 +194,7 @@ export const experiences = [
     role: "Stagiaire · développement d’application",
     organization: "DSI · Ministère de l’Intérieur",
     description: "Réalisation d’une application Web de gestion des infractions routières à Madagascar.",
-    tools: "React · Node.js · NestJS · GraphQL · MongoDB",
+    tools: "",
     brandLogos: ["ReactJS", "NodeJS", "NestJS", "GraphQL", "MongoDB"],
   },
   {
@@ -202,7 +202,7 @@ export const experiences = [
     role: "Stagiaire · développement Web",
     organization: "H. Création",
     description: "Réalisation d’une application Web de gestion de vote.",
-    tools: "HTML · CSS · JavaScript · PHP 8 · MySQL",
+    tools: "",
     brandLogos: ["HTML", "CSS", "JavaScript", "PHP", "JQuery", "MySQL"],
   },
 ];
@@ -211,30 +211,69 @@ export const skills = [
   {
     level: "Pratiqué en mission / projet",
     tone: "primary",
-    tools: ["Python", "Apache Hop", "Apache NiFi", "PostgreSQL", "Power BI Desktop", "Power BI Service", "Power Query", "DAX", "Power Automate", "SFTP", "Docker", "SQL", "Excel avancé", "Polars", "n8n"],
+    tools: ["Python", "Apache NiFi","Apache Hop", "Talend DI", "PostgreSQL", "Power BI Desktop/Service", "Power Query", "DAX", "Power Automate", "SFTP", "Docker", "SQL", "Excel avancé", "n8n"],
   },
   {
     level: "En cours d’apprentissage",
     tone: "learning",
-    tools: ["Apache Airflow"],
+    tools: ["Talend ESB","LangChain", "LangGraph"],
   },
   {
     level: "Selon les projets documentés",
     tone: "project",
-    tools: ["KNN", "CNN", "TensorFlow / Keras", "Gradio", "ChromaDB", "Transformers", "MongoDB", "GraphQL"],
+    tools: ["KNN", "CNN", "TensorFlow / Keras", "Gradio", "ChromaDB", "Transformers", "MongoDB", "GraphQL","Apache Airflow","Apache Kafka"],
   },
 ];
 
+
 export const education = [
-  { date: "2025 — 2026", title: "Master II · Sciences des Données et Intelligence Artificielle", place: "EMIT · Université de Fianarantsoa" },
-  { date: "2024 — 2025", title: "Master I · Sciences des Données et Intelligence Artificielle", place: "EMIT · Université de Fianarantsoa" },
-  { date: "2023 — 2024", title: "Licence en Informatique", place: "EMIT · Université de Fianarantsoa" },
+  {
+    date: "2025 — 2026",
+    title: "Master II · Sciences des Données et Intelligence Artificielle",
+    place: "EMIT · Université de Fianarantsoa",
+  },
+  {
+    date: "2024 — 2025",
+    title: "Master I · Sciences des Données et Intelligence Artificielle",
+    place: "EMIT · Université de Fianarantsoa",
+  },
+  {
+    date: "2023 — 2024",
+    title: "Licence en Informatique",
+    place: "EMIT · Université de Fianarantsoa",
+  },
+  {
+    date: "2019 — 2020",
+    title: "Baccalauréat Général · Série C",
+    place: "Lycée Notre Dame",
+  },
+  {
+    date: "Avril 2026",
+    title: "Formation en Power BI et Analyse de Données",
+    place: "Orange Digital Center · 1 semaine",
+  },
+  {
+    date: "Janvier 2026",
+    title: "Formation en Analyse de Données avec l’IA",
+    place: "Orange Digital Center · 1 semaine",
+  },
+  {
+    date: "Septembre 2025",
+    title: "Formation en Intelligence Artificielle et outils",
+    place: "Orange Digital Center · 1 semaine",
+  },
+  {
+    date: "Juin 2025",
+    title: "Formation en MongoDB et Node.js",
+    place: "Orange Digital Center · 1 semaine",
+  },
 ];
+
 
 export const contact = {
   email: "razafindratsimbabrunoismael@gmail.com",
   phone: "+261329572993",
-  phoneLabel: "+261 32 95 729 93",
+  phoneLabel: "+261 32 95 729 93 / 38 94 055 22",
   github: "https://github.com/IsmaelBruno",
   location: "Antananarivo, Madagascar",
 };

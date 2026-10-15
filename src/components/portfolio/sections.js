@@ -1,3 +1,5 @@
+"use client";
+
 import {
   ArrowDownRight,
   ArrowRight,
@@ -10,89 +12,27 @@ import {
   Mail,
   MapPin,
   Phone,
+  Trophy,
   Workflow,
-  Trophy
 } from "lucide-react";
-import {
-  siApachenifi,
-  siDocker,
-  siPostgresql,
-  siPython,
-  siMongodb,
-  siMysql,
-  siNodedotjs,
-  siNestjs,
-  siGraphql,
-  siReact,
-  siJavascript,
-  siPhp,
-  siHtml5,
-  siJquery,
-  siTalend,
-  siApacheairflow,
-  siN8n,
-  siGithub,
-  siGit,
-} from "simple-icons";
+import { useLanguage } from "@/lib/i18n";
 import DataFlow from "./data-flow";
-import { contact, education, experiences, projects, services, skills } from "./data";
+import { contact, skills } from "./data";
 import ProjectGallery from "./project-gallery";
 import ProfileCard from "./profile-card";
 import Reveal from "./reveal";
+import { TechBadge } from "./tech-badge";
 
 const serviceIcons = {
-  chart: BarChart3,
-  database: Database,
-  brain: BrainCircuit,
-  workflow: Workflow,
+  "01": BarChart3,
+  "02": Database,
+  "03": BrainCircuit,
+  "04": Workflow,
 };
-
-const technologyLogos = {
-  Python: siPython,
-  "Apache NiFi": siApachenifi,
-  PostgreSQL: siPostgresql,
-  Docker: siDocker,
-  MySQL: siMysql,
-  MongoDB: siMongodb,
-  NodeJS: siNodedotjs,
-  NestJS: siNestjs,
-  GraphQL: siGraphql,
-  ReactJS: siReact,
-  JavaScript: siJavascript,
-  PHP: siPhp,
-  HTML: siHtml5,
-  JQuery: siJquery,
-  Talend: siTalend,
-  Airflow: siApacheairflow,
-  n8n: siN8n,
-  Git: siGit,
-  GitHub: siGithub,
-};;
-
-function TechnologyLogos({ names }) {
-  return (
-    <div className="experience-brand-logos" aria-label="Logos de technologies utilisées">
-      {names.map((name) => {
-        const icon = technologyLogos[name];
-
-        return (
-          <span className="experience-brand" key={name}>
-            {icon && icon.hex && icon.path ? (
-              <svg aria-hidden="true" viewBox="0 0 24 24" style={{ color: `#${icon.hex}` }}>
-                <path d={icon.path} />
-              </svg>
-            ) : null}
-            {name}
-          </span>
-        );
-      })}
-    </div>
-  );
-}
 
 function SectionIntro({ index, eyebrow, title, accent, description, light = false }) {
   return (
-    <Reveal className={`section-intro-block${light ? " section-intro-block--light" : ""}`}>
+    <Reveal className={`section-intro-block${light ? " section-intro-block--light" : ""}`} y={30}>
       <div className="section-intro-index">{index} <span /> BR / PORTFOLIO DATA</div>
       <div className="section-intro-main">
         <p className="eyebrow">{eyebrow}</p>
@@ -104,53 +44,90 @@ function SectionIntro({ index, eyebrow, title, accent, description, light = fals
 }
 
 export function HeroSection() {
+  const { t } = useLanguage();
+
   return (
     <section className="folio-hero" id="accueil">
       <div className="folio-container folio-hero-grid">
         <div className="folio-hero-copy">
-          <p className="eyebrow hero-eyebrow"><span className="status-live" /> DATA ANALYST · DATA ENGINEER · DATA SCIENCE</p>
-          <h1>Je rends la donnée <em>utile.</em></h1>
-          <p className="hero-summary">
-            Des flux bruts aux décisions éclairées : j’intègre, fiabilise et analyse les données pour construire des outils compréhensibles et utiles au métier.
-          </p>
-          <div className="hero-cta-row">
-            <a className="folio-button folio-button--dark" href="#projets">Explorer les études de cas <ArrowRight aria-hidden="true" size={16} /></a>
-            <a className="text-link" href={`mailto:${contact.email}`}>Me contacter <ArrowUpRight aria-hidden="true" size={15} /></a>
-          </div>
+          <Reveal delay={0.05} y={20}>
+            <p className="eyebrow hero-eyebrow">
+              <span className="status-live" /> {t.hero.eyebrow}
+            </p>
+          </Reveal>
+
+          {/* Interactive Tech Headline with authentic Safira March typography */}
+          <Reveal delay={0.12} y={25}>
+            <h1>
+              {t.hero.title1} <em>{t.hero.title2}</em>
+            </h1>
+          </Reveal>
+
+          <Reveal delay={0.18} y={25}>
+            <p className="hero-summary">{t.hero.summary}</p>
+          </Reveal>
+
+          <Reveal delay={0.24} y={25}>
+            <div className="hero-cta-row">
+              <a className="folio-button folio-button--dark" href="#projets">
+                {t.hero.ctaPrimary} <ArrowRight aria-hidden="true" size={16} />
+              </a>
+              <a className="text-link" href={`mailto:${contact.email}`}>
+                {t.hero.ctaSecondary} <ArrowUpRight aria-hidden="true" size={15} />
+              </a>
+            </div>
+          </Reveal>
         </div>
-        <DataFlow />
+
+        <Reveal delay={0.2} y={35}>
+          <DataFlow />
+        </Reveal>
       </div>
-      <div className="folio-container hero-foot">
-        <span>ANTANANARIVO, MADAGASCAR</span>
-        <span>COLLECTER <i>→</i> TRANSFORMER <i>→</i> COMPRENDRE <i>→</i> DÉCIDER</span>
-        <a href="#parcours" aria-label="Défiler vers le parcours">DÉFILER <ArrowDownRight aria-hidden="true" size={15} /></a>
-      </div>
+
+      <Reveal delay={0.25} y={15}>
+        <div className="folio-container hero-foot">
+          <span>{t.hero.footLocation}</span>
+          <span>{t.hero.footPipeline}</span>
+          <a href="#parcours" aria-label={t.hero.footScroll}>
+            {t.hero.footScroll} <ArrowDownRight aria-hidden="true" size={15} />
+          </a>
+        </div>
+      </Reveal>
     </section>
   );
 }
 
 export function ServicesSection() {
+  const { t } = useLanguage();
+
   return (
     <section className="folio-section services-section" id="services">
       <div className="folio-container">
         <SectionIntro
-          index="01"
-          eyebrow="DOMAINES D’INTERVENTION"
-          title="Du premier import"
-          accent="au bon indicateur."
-          description="Une approche orientée usage, au croisement de l’analyse, de l’intégration et de la compréhension métier."
+          index={t.services.intro.index}
+          eyebrow={t.services.intro.eyebrow}
+          title={t.services.intro.title}
+          accent={t.services.intro.accent}
+          description={t.services.intro.description}
         />
         <div className="service-ledger">
-          {services.map((service) => {
-            const Icon = serviceIcons[service.icon];
+          {t.services.items.map((service, index) => {
+            const Icon = serviceIcons[service.number] || BarChart3;
+            const toolsList = service.tools ? service.tools.split("·").map((s) => s.trim()) : [];
             return (
-              <Reveal className="service-row" key={service.number}>
+              <Reveal className="service-row" key={service.number} delay={index * 0.08} y={30}>
                 <span className="service-number">{service.number}</span>
                 <Icon className="service-icon" aria-hidden="true" size={22} strokeWidth={1.5} />
                 <div className="service-copy">
                   <h3>{service.title}</h3>
                   <p>{service.description}</p>
-                  <span>{service.tools}</span>
+                  <div className="service-tools-tags">
+                    {toolsList.map((tool) => (
+                      <span className="service-tool-pill" key={tool}>
+                        <TechBadge name={tool} />
+                      </span>
+                    ))}
+                  </div>
                 </div>
                 <ArrowUpRight className="service-arrow" aria-hidden="true" size={20} strokeWidth={1.4} />
               </Reveal>
@@ -163,91 +140,142 @@ export function ServicesSection() {
 }
 
 export function ProjectsSection() {
+  const { t } = useLanguage();
+
   return (
     <section className="folio-section case-section" id="projets">
       <div className="folio-container">
         <SectionIntro
-          index="02"
-          eyebrow="SÉLECTION DE PROJETS"
-          title="Le contexte d’abord."
-          accent="La méthode ensuite."
-          description="Des réalisations issues de missions et de projets documentés. Les livrables sont décrits sans ajouter de résultats qui n’ont pas été mesurés."
+          index={t.projects.intro.index}
+          eyebrow={t.projects.intro.eyebrow}
+          title={t.projects.intro.title}
+          accent={t.projects.intro.accent}
+          description={t.projects.intro.description}
           light
         />
-        <ProjectGallery projects={projects} />
+        <Reveal delay={0.1} y={35}>
+          <ProjectGallery />
+        </Reveal>
       </div>
     </section>
   );
 }
 
 export function SkillsSection() {
+  const { t, lang } = useLanguage();
+
+  // Translated level titles
+  const levelTitles = {
+    en: [
+      "Practiced in production & enterprise missions",
+      "Currently exploring & mastering",
+      "Documented in academic & full-stack projects",
+    ],
+    mg: [
+      "Fampiasa matetika amin'ny asa sy orinasa",
+      "Eo am-pandalinana sy fianarana lalina",
+      "Voarakitra an-tsoratra tamin'ny tetikasa",
+    ],
+    fr: [
+      "Pratiqué en mission & projet d’entreprise",
+      "En cours d’apprentissage & veille active",
+      "Selon les projets documentés",
+    ],
+  };
+
+  const activeLevelTitles = levelTitles[lang] || levelTitles.en;
+
   return (
     <section className="folio-section skill-section" id="competences">
       <div className="folio-container">
         <SectionIntro
-          index="03"
-          eyebrow="OUTILS & PRATIQUES"
-          title="La stack suit"
-          accent="le besoin."
-          description="Niveaux présentés selon les missions, les projets et les formations mentionnées dans mon parcours."
+          index={t.skills.intro.index}
+          eyebrow={t.skills.intro.eyebrow}
+          title={t.skills.intro.title}
+          accent={t.skills.intro.accent}
+          description={t.skills.intro.description}
         />
         <div className="skill-ledger">
           {skills.map((group, index) => (
-            <Reveal className="skill-line" key={group.level} delay={index * 0.06}>
+            <Reveal className="skill-line" key={index} delay={index * 0.08} y={30}>
               <span className={`skill-marker skill-marker--${group.tone}`} />
-              <h3>{group.level}</h3>
+              <h3>{activeLevelTitles[index] || group.level}</h3>
               <div className="skill-tags">
-                {group.tools.map((tool) => <span key={tool}>{tool}</span>)}
+                {group.tools.map((tool) => (
+                  <span key={tool}>
+                    <TechBadge name={tool} />
+                  </span>
+                ))}
               </div>
             </Reveal>
           ))}
         </div>
-        <p className="skill-note">JavaScript, React, Node.js, NestJS et GraphQL pratiqués dans des projets de développement applicatif.</p>
+        <Reveal delay={0.2} y={15}>
+          <p className="skill-note">{t.skills.note}</p>
+        </Reveal>
       </div>
     </section>
   );
 }
 
 export function ExperienceSection() {
+  const { t } = useLanguage();
+
   return (
     <section className="folio-section experience-section" id="parcours">
       <div className="folio-container experience-grid">
         <div className="experience-heading">
           <SectionIntro
-            index="04"
-            eyebrow="EXPÉRIENCE PROFESSIONNELLE"
-            title="Apprendre en"
-            accent="produisant."
-            description="Missions et stages, de la donnée d’entreprise à l’intelligence artificielle appliquée."
+            index={t.experience.intro.index}
+            eyebrow={t.experience.intro.eyebrow}
+            title={t.experience.intro.title}
+            accent={t.experience.intro.accent}
+            description={t.experience.intro.description}
           />
-          <Reveal className="award-note">
-            <span><Trophy aria-hidden="true" size={22} />3<sup>e</sup></span>
-              <div>
-                <p><strong>3ᵉ place — Hackathon DevHub</strong><br />
-                  Accès Banque · Team Zenith<br />
-                  <small>Juin 2025</small>
+          <Reveal className="award-note" delay={0.15} y={30}>
+            <span><Trophy aria-hidden="true" size={22} /></span>
+            <div>
+              {t.experience.hackathons.map((hackathon) => (
+                <p key={hackathon.title}>
+                  <strong>{hackathon.title}</strong><br />
+                  {hackathon.detail}<br />
+                  <small>{hackathon.date}</small>
                 </p>
-                <p><strong>Participant — Hackathon DevFest 2025</strong><br />
-                  Team API Leka<br />
-                  <small>6–7 décembre 2025</small>
-                </p>
-                <p><strong>Participant — EMIHack 3.0</strong><br />
-                  Hackathon interne EMIT · Team API Leka<br />
-                  <small>Mai 2025</small>
-                </p>
+              ))}
+              <img
+                src="/coding.gif"
+                alt="Illustration coding / hackathon"
+                className="award-gif"
+                loading="lazy"
+                decoding="async"
+              />
             </div>
           </Reveal>
         </div>
         <div className="experience-list">
-          {experiences.map((experience, index) => (
-            <Reveal className="experience-row" key={experience.organization} delay={index * 0.04}>
+          {t.experience.items.map((experience, index) => (
+            <Reveal className="experience-row" key={experience.organization} delay={index * 0.06} y={30}>
               <span className="experience-date">{experience.date}</span>
               <div>
                 <h3>{experience.role}</h3>
                 <p className="experience-org">{experience.organization}</p>
                 <p className="experience-description">{experience.description}</p>
-                <span className="experience-tools">{experience.tools}</span>
-                {experience.brandLogos && <TechnologyLogos names={experience.brandLogos} />}
+                <div className="experience-tools-pills">
+                  {experience.tools
+                    ? experience.tools.split("·").map((tool) => (
+                        <span className="exp-tool-pill" key={tool}>
+                          <TechBadge name={tool.trim()} />
+                        </span>
+                      ))
+                    : null}
+                </div>
+                {experience.brandLogos && (
+                  <div className="experience-brand-logos" aria-label="Logos of tools used">
+                    {experience.brandLogos.map((name) => (
+                      <TechBadge key={name} name={name} className="experience-brand" />
+                    ))}
+                  </div>
+                )}
               </div>
             </Reveal>
           ))}
@@ -258,34 +286,40 @@ export function ExperienceSection() {
 }
 
 export function AboutSection() {
+  const { t } = useLanguage();
+
   return (
     <section className="folio-section about-section" id="a-propos">
       <div className="folio-container about-grid">
-        <ProfileCard email={contact.email} />
+        <Reveal delay={0.08} y={35}>
+          <ProfileCard email={contact.email} />
+        </Reveal>
         <div className="about-content">
           <SectionIntro
-            index="05"
-            eyebrow="BRUNO ISMAËL RAZAFINDRATSIMBA"
-            title="La technique au service"
-            accent="des bonnes questions."
-            description="Data Analyst et Data Engineer orienté pipelines, je poursuis un Master II en Sciences des Données et Intelligence Artificielle à l’EMIT, Université de Fianarantsoa."
+            index={t.about.intro.index}
+            eyebrow={t.about.intro.eyebrow}
+            title={t.about.intro.title}
+            accent={t.about.intro.accent}
+            description={t.about.intro.description}
           />
-          <div className="about-lower">
+          <Reveal className="about-lower" delay={0.15} y={30}>
             <div className="education-list">
-              <h3><GraduationCap aria-hidden="true" size={17} /> FORMATION</h3>
-              {education.map((item) => (
+              <h3><GraduationCap aria-hidden="true" size={17} /> {t.about.educationTitle}</h3>
+              {t.about.education.map((item) => (
                 <div className="education-row" key={item.date}>
                   <span>{item.date}</span><p><strong>{item.title}</strong><small>{item.place}</small></p>
                 </div>
               ))}
             </div>
             <div className="language-note">
-              <h3>LANGUES</h3>
-              <p>Malagasy <span>Maternel</span></p>
-              <p>Français <span>Intermédiaire</span></p>
-              <p>Anglais <span>Débutant · lecture de documentation technique</span></p>
+              <h3>{t.about.languagesTitle}</h3>
+              {t.about.languages.map((l) => (
+                <p key={l.name}>
+                  {l.name} <span>{l.level}</span>
+                </p>
+              ))}
             </div>
-          </div>
+          </Reveal>
         </div>
       </div>
     </section>
@@ -293,33 +327,54 @@ export function AboutSection() {
 }
 
 export function ContactSection() {
+  const { t } = useLanguage();
+
   return (
     <section className="folio-contact" id="contact">
       <div className="folio-container contact-grid">
-        <Reveal className="contact-heading">
-          <p className="eyebrow">UNE QUESTION DATA ?</p>
-          <h2>Parlons de<br /><em>votre prochain flux.</em></h2>
-          <p>Un pipeline à fiabiliser, un dashboard à construire ou un prototype à explorer ?</p>
+        <Reveal className="contact-heading" delay={0.08} y={30}>
+          <p className="eyebrow">{t.contact.eyebrow}</p>
+          <h2>{t.contact.title1}<br /><em>{t.contact.title2}</em></h2>
+          <p>{t.contact.subtitle}</p>
         </Reveal>
-        <div className="contact-links">
-          <a href={`mailto:${contact.email}`}><Mail aria-hidden="true" size={18} /><span><small>ÉCRIRE</small>{contact.email}</span><ArrowUpRight aria-hidden="true" size={17} /></a>
-          <a href={`tel:${contact.phone}`}><Phone aria-hidden="true" size={18} /><span><small>APPELER</small>{contact.phoneLabel}</span><ArrowUpRight aria-hidden="true" size={17} /></a>
-          <a href={contact.github} target="_blank" rel="noreferrer"><CodeXml aria-hidden="true" size={18} /><span><small>CODE & PROJETS</small>github.com/IsmaelBruno</span><ArrowUpRight aria-hidden="true" size={17} /></a>
-          <div className="contact-location"><MapPin aria-hidden="true" size={17} /><span>{contact.location}</span></div>
-        </div>
+        <Reveal className="contact-links" delay={0.16} y={35}>
+          <a href={`mailto:${contact.email}`}>
+            <Mail aria-hidden="true" size={18} />
+            <span><small>{t.contact.actions.write}</small>{contact.email}</span>
+            <ArrowUpRight aria-hidden="true" size={17} />
+          </a>
+          <a href={`tel:${contact.phone}`}>
+            <Phone aria-hidden="true" size={18} />
+            <span><small>{t.contact.actions.call}</small>{contact.phoneLabel}</span>
+            <ArrowUpRight aria-hidden="true" size={17} />
+          </a>
+          <a href={contact.github} target="_blank" rel="noreferrer">
+            <CodeXml aria-hidden="true" size={18} />
+            <span><small>{t.contact.actions.code}</small>github.com/IsmaelBruno</span>
+            <ArrowUpRight aria-hidden="true" size={17} />
+          </a>
+          <div className="contact-location">
+            <MapPin aria-hidden="true" size={17} />
+            <span>{contact.location}</span>
+          </div>
+        </Reveal>
       </div>
     </section>
   );
 }
 
 export function SiteFooter() {
+  const { t } = useLanguage();
+
   return (
     <footer className="folio-footer">
-      <div className="folio-container footer-inner">
-        <a className="footer-mark" href="#accueil">BR<span> / DATA</span></a>
-        <p>Data Analytics · Engineering · Science<br /><span>Antananarivo, Madagascar · 2026</span></p>
-        <a className="footer-top" href="#accueil">Retour en haut <ArrowUpRight aria-hidden="true" size={15} /></a>
-      </div>
+      <Reveal delay={0.1} y={20}>
+        <div className="folio-container footer-inner">
+          <a className="footer-mark" href="#accueil">BR<span> / {t.footer.markSub}</span></a>
+          <p>{t.footer.copy}<br /><span>{t.footer.location}</span></p>
+          <a className="footer-top" href="#accueil">{t.footer.backToTop} <ArrowUpRight aria-hidden="true" size={15} /></a>
+        </div>
+      </Reveal>
     </footer>
   );
 }

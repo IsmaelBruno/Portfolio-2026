@@ -1,5 +1,8 @@
+"use client";
 
-import Navigation from "../components/navigation";
+import { LanguageProvider } from "@/lib/i18n";
+import Navigation from "@/components/navigation";
+import PageLoader from "@/components/portfolio/page-loader";
 import {
   AboutSection,
   ContactSection,
@@ -9,13 +12,17 @@ import {
   ServicesSection,
   SiteFooter,
   SkillsSection,
-} from "../components/portfolio/sections";
+} from "@/components/portfolio/sections";
 
 export default function Home() {
   return (
-    <>
-      <a className="skip-link" href="#contenu">Aller au contenu</a>
+    <LanguageProvider>
+      {/* Loader d'ouverture & de latence avec WanderingEyes en vert */}
+      <PageLoader />
+
+      {/* Barre de navigation multilingue */}
       <Navigation />
+
       <main className="data-folio" id="contenu">
         <HeroSection />
         <ServicesSection />
@@ -25,7 +32,8 @@ export default function Home() {
         <AboutSection />
         <ContactSection />
       </main>
+
       <SiteFooter />
-    </>
+    </LanguageProvider>
   );
 }

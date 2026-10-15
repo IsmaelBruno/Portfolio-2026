@@ -21,9 +21,9 @@ const safiraMarch = localFont({
 });
 
 export const metadata = {
-  title: "Bruno Ismaël Razafindratsimba — Data & décision",
+  title: "ABI-MDG | Advanced Business Intelligence - MADAGASCAR",
   description:
-    "Data Analyst et Data Engineer orienté pipelines. Études de cas en intégration de données, Business Intelligence, Machine Learning et automatisation.",
+    "L'intelligence des données au service de la performance de votre entreprise. Data Analyst et Data Engineer orienté pipelines. Études de cas en intégration de données, Business Intelligence, Machine Learning et automatisation.",
 };
 
 export default function RootLayout({ children }) {
