@@ -5,9 +5,10 @@ export default function Loading() {
     <div className="loading-splash">
       <div className="loading-content">
         {/* Signature / branding */}
+        
         <h2 className="loading-title">
-          Bruno Ismaël<br />
-          <em>Razafindratsimba</em>
+          ABI-MADAGASCAR<br />
+          <em>Bruno Ismaël Razafindratsimba / Data Enthusiat</em>
         </h2>
         <p className="loading-tagline">Data · Analytics · Engineering</p>
 
