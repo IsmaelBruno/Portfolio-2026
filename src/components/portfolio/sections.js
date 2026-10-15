@@ -260,15 +260,7 @@ export function ExperienceSection() {
                 <h3>{experience.role}</h3>
                 <p className="experience-org">{experience.organization}</p>
                 <p className="experience-description">{experience.description}</p>
-                <div className="experience-tools-pills">
-                  {experience.tools
-                    ? experience.tools.split("·").map((tool) => (
-                        <span className="exp-tool-pill" key={tool}>
-                          <TechBadge name={tool.trim()} />
-                        </span>
-                      ))
-                    : null}
-                </div>
+
                 {experience.brandLogos && (
                   <div className="experience-brand-logos" aria-label="Logos of tools used">
                     {experience.brandLogos.map((name) => (
