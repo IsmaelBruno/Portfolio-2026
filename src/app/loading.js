@@ -4,15 +4,21 @@ export default function Loading() {
   return (
     <div className="loading-splash">
       <div className="loading-content">
-        {/* Signature / branding */}
-        
+        {/* Favicon */}
+        <img
+          src="/favicon-32x32.png"
+          alt="ABI-MDG"
+          className="loading-favicon"
+          width="56"
+          height="56"
+        />
+
         <h2 className="loading-title">
           ABI-MADAGASCAR<br />
-          <em>Bruno Ismaël Razafindratsimba / Data Enthusiat</em>
+          <em>Bruno Ismaël Razafindratsimba / Data Enthusiast</em>
         </h2>
         <p className="loading-tagline">Data · Analytics · Engineering</p>
 
-        {/* WanderingEyes loader en vert */}
         <WanderingEyes className="loading-eyes" />
 
         <p className="loading-hint">Chargement en cours … </p>
@@ -38,18 +44,14 @@ export default function Loading() {
           text-align: center;
         }
 
-        .loading-brand-mark {
-          display: grid;
+        /* 🎨 Favicon dans la page de chargement */
+        .loading-favicon {
+          display: block;
           width: 56px;
-          aspect-ratio: 1;
-          place-items: center;
+          height: 56px;
           margin: 0 0 24px;
-          background: #2d9b7a;
-          color: #fff;
-          font-size: 18px;
-          font-weight: 800;
-          letter-spacing: 0.02em;
-          border-radius: 2px;
+          border-radius: 4px;
+          object-fit: contain;
           animation: loading-mark-pulse 2s ease-in-out infinite;
         }
 
@@ -93,12 +95,8 @@ export default function Loading() {
         }
 
         @keyframes loading-splash-in {
-          from {
-            opacity: 0;
-          }
-          to {
-            opacity: 1;
-          }
+          from { opacity: 0; }
+          to { opacity: 1; }
         }
 
         @keyframes loading-mark-pulse {
@@ -111,15 +109,10 @@ export default function Loading() {
         }
 
         @keyframes loading-hint-blink {
-          0%, 100% {
-            opacity: 1;
-          }
-          50% {
-            opacity: 0.4;
-          }
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.4; }
         }
 
-        /* Support du thème dark */
         :root[data-theme="dark"] .loading-splash {
           background: var(--background, #101713);
         }
